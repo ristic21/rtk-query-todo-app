@@ -5,20 +5,20 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3500' }),
     tagTypes: ['Todos'],
     endpoints: (builder) => ({
-        getTodos: builder.query({
+        getTodos: builder.query({ //get todo ruta
             query: () => '/todos',
-            transformResponse: res => res.sort((a, b) => b.id - a.id),
+            transformResponse: res => res.sort((a, b) => b.id - a.id), // sortiranje getovanih todoova
             providesTags: ['Todos']
         }),
-        addTodo: builder.mutation({
-            query: (todo) => ({
+        addTodo: builder.mutation({ //post-add todo ruta
+            query: (todo) => ({ 
                 url: '/todos',
                 method: 'POST',
                 body: todo
             }),
             invalidatesTags: ['Todos']
         }),
-        updateTodo: builder.mutation({
+        updateTodo: builder.mutation({ //patch-edit todo ruta *razlika izmedju post i patch*
             query: (todo) => ({
                 url: `/todos/${todo.id}`,
                 method: 'PATCH',
@@ -26,7 +26,7 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['Todos']
         }),
-        deleteTodo: builder.mutation({
+        deleteTodo: builder.mutation({ //delete todo ruta
             query: ({ id }) => ({
                 url: `/todos/${id}`,
                 method: 'DELETE',
